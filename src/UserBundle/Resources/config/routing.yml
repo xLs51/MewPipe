@@ -1,0 +1,8 @@
+admin_user:
+    resource: "@UserBundle/Resources/config/routing/admin_user.yml"
+    prefix: /admin/user
+
+login_google:
+    path: /login/google
+    defaults: { _controller: "UserBundle:Security:googleLogin" }
+

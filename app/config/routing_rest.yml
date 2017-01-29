@@ -1,0 +1,7 @@
+rest_video:
+    type: rest
+    resource: "@AppBundle/Resources/config/routing_rest.yml"
+
+rest_user:
+    type: rest
+    resource: "@UserBundle/Resources/config/routing_rest.yml"

@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>User list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>First&nbsp;name</th>
+                <th>Last&nbsp;name</th>
+                <th>Birthday</th>
+                <th>OpenId</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.username }}</td>
+                <td>{{ entity.email }}</td>
+                <td>{{ entity.firstName }}</td>
+                <td>{{ entity.lastName }}</td>
+                <td>{% if entity.birthday %}{{ entity.birthday|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ entity.openid }}</td>
+                <td>
+                    <a class="glyphicon glyphicon-edit" href="{{ path('admin_user_edit', { 'id': entity.id }) }}"></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h4>
+        <a href="{{ path('admin_user_new') }}">Create a new user</a>
+    </h4>
+{% endblock %}

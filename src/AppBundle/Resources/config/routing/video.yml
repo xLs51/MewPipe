@@ -1,0 +1,21 @@
+user_video:
+    path:     /
+    defaults: { _controller: "AppBundle:Video:index" }
+
+user_video_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Video:edit" }
+
+user_video_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:Video:update" }
+    requirements: { _method: post|put }
+
+user_video_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Video:delete" }
+    requirements: { _method: post|delete }
+
+user_video_upload:
+    path:      /upload
+    defaults:  { _controller: AppBundle:Video:upload }

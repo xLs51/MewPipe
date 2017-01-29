@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    {% if error is defined %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+    {% endif %}
+
+    <h1>Upload a new video</h1>
+
+    <table class="table">
+        <form action="#" method="post" {{ form_enctype(form) }}>
+            <tr>
+                <td>Title</td>
+                <td>{{ form_widget(form.title, {'attr': {'class' : 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>{{ form_widget(form.description, {'attr': {'class' : 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>{{ form_widget(form.status, {'attr': {'class' : 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+                <td>File</td>
+                <td>{{ form_widget(form.file) }}</td>
+            </tr>
+            <tr>
+              <td colspan="2"><button class="btn btn-default" type="submit">Upload !</button></td>
+            </tr>
+
+            {{ form_rest(form) }}
+
+        </form>
+    </table>
+
+{% endblock %}

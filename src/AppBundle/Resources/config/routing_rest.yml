@@ -1,0 +1,4 @@
+videos :
+  type: rest
+  resource: "AppBundle:VideoRest"
+  name_prefix: api_

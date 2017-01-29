@@ -1,0 +1,51 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Video list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>View&nbsp;count</th>
+                <th>Share&nbsp;count</th>
+                <th>Share&nbsp;URL</th>
+                <th>Added&nbsp;date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                {% if entity.status == "link" %}
+                    <td><a href="http://localhost{{ app.request.baseUrl~entity.shareUrl }}">{{ entity.title }}</a></td>
+                {% else %}
+                    <td><a href="{{ path('mewpipe_view_video', { 'id': entity.id }) }}">{{ entity.title }}</a></td>
+                {% endif %}
+
+                <td>{{ entity.description }}</td>
+                <td>{{ entity.viewCount }}</td>
+                <td>{{ entity.shareCount }}</td>
+
+                {% if entity.status == "link" %}
+                    <td><a href="http://localhost{{ app.request.baseUrl~entity.shareUrl }}">Share Link</a></td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+
+                <td>{% if entity.addedDate %}{{ entity.addedDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.status }}</td>
+                <td>
+                    <a class="glyphicon glyphicon-edit" href="{{ path('user_video_edit', { 'id': entity.id }) }}"></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h4>
+        <a href="{{ path('user_video_upload') }}">Upload a new video</a>
+    </h4>
+{% endblock %}

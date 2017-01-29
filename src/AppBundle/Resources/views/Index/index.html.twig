@@ -1,0 +1,57 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div id="mostshared" class="col-md-5">
+        <h2><a href="{{ path('mewpipe_video_list', {'type': 'shared'}) }}">Most shared videos</a></h2>
+
+        {% for video in mostShared %}
+            <div class="col-md-6">
+                <a href="{{ path('mewpipe_view_video', {'id': video.id}) }}">{{ video.title }}</a><br>
+                <div class="view">
+                    <img src="{{ app.request.basePath ~ "/" ~ video.getImageWebPath }}" alt="{{ video.title }}" >
+                    <div class="mask">
+                        <a href="{{ path('mewpipe_view_video', {'id': video.id}) }}" class="info"><span class='fa fa-play-circle  fa-5x'></span></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="mostviewed" class="col-md-5 col-md-offset-2">
+        <h2><a href="{{ path('mewpipe_video_list', {'type': 'viewed'}) }}">Most viewed videos</a></h2>
+
+        {% for video in mostViewed %}
+            <div class="col-md-6">
+                <a href="{{ path('mewpipe_view_video', {'id': video.id}) }}">{{ video.title }}</a>
+                <div class="view">
+                    <img src="{{ app.request.basePath ~ "/" ~ video.getImageWebPath }}" alt="{{ video.title }}" >
+                    <div class="mask">
+                        <a href="{{ path('mewpipe_view_video', {'id': video.id}) }}" class="info"><span class='fa fa-play-circle  fa-5x'></span></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="recentvideo" class="col-md-12">
+        <h2><a href="{{ path('mewpipe_video_list', {'type': 'recent'}) }}">Most recent videos</a></h2>
+
+        {% for video in mostRecent %}
+            <div class="col-md-3">
+                <a href="{{ path('mewpipe_view_video', {'id': video.id}) }}">{{ video.title }}</a><br>
+                <div class="view">
+                    <img src="{{ app.request.basePath ~ "/" ~ video.getImageWebPath }}" alt="{{ video.title }}" >
+                    <div class="mask">
+                        <a href="{{ path('mewpipe_view_video', {'id': video.id}) }}" class="info"><span class='fa fa-play-circle  fa-5x'></span></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script type="text/javascript">
+        $('#container').removeClass('col-md-10');
+        $('#container').removeClass('col-md-offset-1');
+        $('#container').addClass('col-md-12');
+    </script>
+{% endblock %}

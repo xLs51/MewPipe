@@ -1,0 +1,15 @@
+services:
+    user.registration.form.type:
+        class: UserBundle\Form\Type\RegistrationFormType
+        tags:
+            - { name: form.type, alias: user_registration }
+
+    user.profile.form.type:
+        class: UserBundle\Form\Type\ProfileFormType
+        tags:
+            - { name: form.type, alias: user_profile }
+
+    user.change_password.form.type:
+        class: UserBundle\Form\Type\ChangePasswordFormType
+        tags:
+            - { name: form.type, alias: user_change_password }

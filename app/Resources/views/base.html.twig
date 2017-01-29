@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+
+        <title>{% block title %}MewPipe{% endblock %}</title>
+
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+
+        {% block stylesheets %}
+            <link href="http://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Roboto+Slab" rel="stylesheet">
+            <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="{{ asset('js/jquery-1.11.1.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        {% endblock %}
+    </head>
+    <body>
+        <div id="header" class ="col-md-12">
+            <div class="navbar navbar-default">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ path('mewpipe_index') }}">MewPipe <span class="fa fa-youtube-play" style="color:#93C54B;"></span></a>
+
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <a class="navbar-brand glyphicon glyphicon-user" title="Profile" href="{{ path('fos_user_profile_show') }}"></a>
+                        <a class="navbar-brand glyphicon glyphicon-facetime-video" title="Videos" href="{{ path('user_video') }}"></a>
+                    {% endif %}
+
+                     {% if is_granted('ROLE_ADMIN') %}
+                        <a class="navbar-brand glyphicon glyphicon-cog" title="Admin" href="{{ path('admin_user') }}"></a>
+                    {% endif %}
+
+                </div>
+
+                <form class="navbar-form navbar-right" role="search" method="GET" action="{{ path('mewpipe_search') }}">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search a video" id="search-query">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit" id="search-button" disabled><i class="glyphicon glyphicon-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+
+                <div class="nav navar-nav navbar-right">
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <a class="navbar-brand glyphicon glyphicon-off" title="Log in" href="{{ path('fos_user_security_logout') }}"></a>
+                    {% else %}
+                        <a class="navbar-brand" title="Register" href="{{ path('fos_user_registration_register') }}">Register</a>
+                        <a class="navbar-brand" title="Login" href="{{ path('fos_user_security_login') }}">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div id="container" class="col-md-10 col-md-offset-1 top50">
+            {% block body %}{% endblock %}
+        </div>
+
+        <div class="arrow-bottom col-md-12"></div>
+        <div id="footer" class="col-md-12">
+            <p>MewPipe © {{ 'now'|date('Y') }}. All Right Reserved.</p>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#search-query').keyup(function() {
+                    if($('#search-query').val().length < 3)
+                        $('#search-button').prop('disabled', true);
+                    else
+                        $('#search-button').prop('disabled', false);
+                })
+            });
+        </script>
+    </body>
+</html>

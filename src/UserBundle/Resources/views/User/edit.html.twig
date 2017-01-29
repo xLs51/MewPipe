@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+    {% if error is defined %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+    {% endif %}
+
+    <h1>Edit user</h1>
+
+    <table class="table">
+        {{ form_start(edit_form) }}
+            <tr>
+                <td>Username</td>
+                <td>{{ form_widget(edit_form.username, {'attr': {'class' : 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+                <td>Last name</td>
+                <td>{{ form_widget(edit_form.lastName, {'attr': {'class' : 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+                <td>First name</td>
+                <td>{{ form_widget(edit_form.firstName, {'attr': {'class' : 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ form_widget(edit_form.email, {'attr': {'class' : 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+                <td>Birthday</td>
+                <td>
+                    <div class="row">
+                      <div class="col-md-4">{{ form_widget(edit_form.birthday.year, {'attr': {'class' : 'form-control'}}) }}</div>
+                      <div class="col-md-4">{{ form_widget(edit_form.birthday.month, {'attr': {'class' : 'form-control'}}) }}</div>
+                      <div class="col-md-4">{{ form_widget(edit_form.birthday.day, {'attr': {'class' : 'form-control'}}) }}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>OpenId</td>
+                <td>{{ form_widget(edit_form.openid, {'attr': {'class' : 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+              <td colspan="2">{{ form_widget(edit_form.submit, {'attr': {'class': 'btn btn-default'}, 'label': 'Save !'}) }}</td>
+            </tr>
+
+            {{ form_rest(edit_form) }}
+        {{ form_end(edit_form) }}
+    </table>
+
+    {{ form_start(delete_form) }}
+        {{ form_widget(delete_form.submit, {'attr': {'class': 'btn btn-danger delete-button'}, 'label': 'or Delete !'}) }}
+        {{ form_rest(delete_form) }}
+    {{ form_end(delete_form) }}
+{% endblock %}

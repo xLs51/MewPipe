@@ -1,0 +1,175 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+<div class="col-md-8">
+    <div class="col-md-12">
+        <h2 class="video_title text-center">{{ entity.title }}</h2>
+    </div>
+    <div class="col-md-12 embed-responsive embed-responsive-16by9">
+         <video class="embed-responsive-item" id='media-video' controls src="{{ app.request.basePath ~ "/" ~ entity.getWebPath }}">Please upgrade your browser to watch the video</video>
+    </div>
+    <div class="col-md-12 bar_video">
+        <span onclick='skip(-10);' class="glyphicon glyphicon-fast-backward elembar" title="Backward"></span>
+        <span id='play-button' onclick='play();' class="glyphicon glyphicon-play elembar" title="Play/Pause"></span>
+        <span onclick='skip(10);' class="glyphicon glyphicon-fast-forward elembar" title="Forward"></span>
+        <span onclick='stop();' class="glyphicon glyphicon-stop elembar" title="Stop"></span>
+        <div class='progress' id='progress-bar'>
+            <div class='display'>
+                <div class="progress_bar"></div>
+            </div>
+        </div>
+        <span id='mute-button' onclick='mute();' class=" glyphicon glyphicon-volume-up elembar" title="Mute/Unmute"></span>
+        <span onclick='changeVolume("-");' class="glyphicon glyphicon-minus-sign elembar" title="Vol -"></span>
+        <span onclick='changeVolume("+");'class="glyphicon glyphicon-plus-sign elembar" title="Vol +"></span>
+        <span onclick='replay();' class="glyphicon glyphicon-repeat elembar" title="Replay"></span>
+        <span id='progress-label'>00:00</span>
+    </div>
+</div>
+    <div class="col-md-4">
+        <div class="video_desc top85">
+            {{ entity.description }}
+            <div class="description">
+                Added by {{ entity.user.username }}, at {{ entity.addedDate|date('Y-m-d H:i:s') }}.
+            </div>
+        </div>
+        <h4><span class="fa fa-eye" title="View count"></span> : {{ entity.viewCount }}</h4>
+        <h4><span class="fa fa-share-alt" title="Share count"></span> : {{ entity.shareCount }}</h4>
+    </div>
+
+    <script type="text/javascript">
+
+        document.addEventListener("DOMContentLoaded", function() { initialiseMediaPlayer(); }, false);
+        var mediaPlayer;
+        var progressBar;
+        var progressLabel;
+
+        function initialiseMediaPlayer() {
+            mediaPlayer = document.getElementById('media-video');
+            progressBar = document.getElementById('progress-bar');
+            progressLabel = document.getElementById('progress-label');
+
+            mediaPlayer.controls = false;
+
+            progressBar.addEventListener('click', clickedBar, false);
+
+            mediaPlayer.addEventListener('timeupdate', updateProgressBar, false);
+
+            mediaPlayer.addEventListener('play', function() {
+                var button = document.getElementById('play-button');
+                button.classList.remove("glyphicon-play");
+                button.classList.add("glyphicon-pause");
+            }, false);
+
+            mediaPlayer.addEventListener('pause', function() {
+                var button = document.getElementById('play-button');
+                button.classList.remove("glyphicon-pause");
+                button.classList.add("glyphicon-play");
+            }, false);
+
+            mediaPlayer.addEventListener('volumechange', function(e) {
+                var button = document.getElementById('mute-button');
+                if (mediaPlayer.muted) {
+                    button.classList.remove("glyphicon-volume-up");
+                    button.classList.add("glyphicon-volume-off");
+                }
+                else {
+                    button.classList.remove("glyphicon-volume-off");
+                    button.classList.add("glyphicon-volume-up");
+                }
+            }, false);
+        }
+
+        function updateProgressBar() {
+            var percentage = Math.floor((100 / mediaPlayer.duration) * mediaPlayer.currentTime);
+            var time = Math.round(mediaPlayer.currentTime);
+
+            $('.progress_bar').width(percentage*2);
+
+            if(time >= 60) {
+                min = Math.floor(time / 60);
+                sec = time - (60 * min);
+
+                if(sec < 10)
+                    sec = '0' + sec;
+                if(min < 10)
+                    min =  '0' + min;
+
+                time = min + ':' + sec;
+            }
+            else if(time < 10)
+                time = "00:0" + time;
+            else
+                time = "00:" + time;
+
+            progressLabel.innerHTML = time;
+        }
+
+
+        function clickedBar(e) {
+            var div = $(e.target);
+            var offset = div.offset();
+            var percentage = Math.floor((e.clientX - offset.left) / 2);
+            var new_time = Math.floor((percentage * mediaPlayer.duration) / 100);
+            $('.progress_bar').width(percentage);
+            mediaPlayer.currentTime = new_time;
+        }
+
+        function play() {
+            var button = document.getElementById('play-button');
+
+           if (mediaPlayer.paused) {
+                mediaPlayer.play();
+                button.classList.remove("glyphicon-play");
+                button.classList.add("glyphicon-pause");
+           } else {
+                mediaPlayer.pause();
+                button.classList.remove("glyphicon-pause");
+                button.classList.add("glyphicon-play");
+           }
+        }
+
+        function stop() {
+            mediaPlayer.pause();
+            mediaPlayer.currentTime = 0;
+        }
+
+        function skip(value) {
+            mediaPlayer.currentTime += value;
+        }
+
+        function replay() {
+            resetPlayer();
+            mediaPlayer.play();
+        }
+
+        function resetPlayer() {
+            mediaPlayer.currentTime = 0;
+        }
+
+        function changeVolume(direction) {
+            if (direction === '+')
+                mediaPlayer.volume += mediaPlayer.volume == 1 ? 0 : 0.1;
+            else
+                mediaPlayer.volume -= (mediaPlayer.volume == 0 ? 0 : 0.1);
+
+            mediaPlayer.volume = parseFloat(mediaPlayer.volume).toFixed(1);
+        }
+
+        function mute() {
+            var button = document.getElementById('mute-button');
+
+            if (mediaPlayer.muted) {
+                button.classList.remove("glyphicon-volume-up");
+                    button.classList.add("glyphicon-volume-off");
+                mediaPlayer.muted = false;
+            }
+           else {
+                button.classList.remove("glyphicon-volume-off");
+                button.classList.add("glyphicon-volume-up");
+                mediaPlayer.muted = true;
+           }
+        }
+
+    </script>
+
+{% endblock %}

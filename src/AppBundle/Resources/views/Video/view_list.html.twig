@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div id="videos" class="col-md-12">
+        <h1>Most {{ type }} videos</h1>
+
+        {% for video in videos %}
+            <div class="col-md-3">
+                <a href="{{ path('mewpipe_view_video', {'id': video.id}) }}">{{ video.title }}</a><br>
+                <div class="view">
+                    <img src="{{ app.request.basePath ~ "/" ~ video.getImageWebPath }}" alt="{{ video.title }}" >
+                    <div class="mask">
+                        <a href="{{ path('mewpipe_view_video', {'id': video.id}) }}" class="info"><span class='fa fa-play-circle  fa-5x'></span></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

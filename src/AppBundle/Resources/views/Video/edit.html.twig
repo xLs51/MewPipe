@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+    {% if error is defined %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+    {% endif %}
+
+    <h1>Edit video</h1>
+
+    <table class="table">
+        {{ form_start(edit_form) }}
+            <tr>
+                <td>Title</td>
+                <td>{{ form_widget(edit_form.title, {'attr': {'class' : 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>{{ form_widget(edit_form.description, {'attr': {'class' : 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>{{ form_widget(edit_form.status, {'attr': {'class' : 'form-control'}}) }}</td>
+            </tr>
+            <tr>
+              <td colspan="2">{{ form_widget(edit_form.submit, {'attr': {'class': 'btn btn-default'}, 'label': 'Save !'}) }}</td>
+            </tr>
+
+            {{ form_rest(edit_form) }}
+        {{ form_end(edit_form) }}
+    </table>
+
+    {{ form_start(delete_form) }}
+        {{ form_widget(delete_form.submit, {'attr': {'class': 'btn btn-danger delete-button'}, 'label': 'or Delete !'}) }}
+        {{ form_rest(delete_form) }}
+    {{ form_end(delete_form) }}
+
+{% endblock %}

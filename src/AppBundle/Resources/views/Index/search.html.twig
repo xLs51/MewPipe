@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h1>Search result</h1>
+    <div class="row-menu search">
+        {% if request %}
+            {% for s in search %}
+                <div class="col-md-12">
+                    <a href="{{ path('mewpipe_view_video', {'id': s.id}) }}" class="info">
+                        <img src="{{ app.request.basePath ~ "/" ~ s.getImageWebPath }}" alt="{{ s.title }}" >
+                    </a>
+                    <a href="{{ path('mewpipe_view_video', {'id': s.id}) }}" class="info">
+                        <h4><span>{{ s.title }}</span></h4>
+                    </a>
+                    <div class="search-desc">
+                        <div class="description">
+                            <span>Added by {{ s.user.username }}, at {{ s.addedDate|date('Y-m-d H:i:s') }}.</span>
+                        </div>
+                        <div><span>{{ s.description }}</span></div>
+                    </div>
+                </div>
+            {% else %}
+                No result found
+            {% endfor %}
+        {% else %}
+            We need atleast 3 characters to use the search function
+        {% endif %}
+    </div>
+{% endblock %}

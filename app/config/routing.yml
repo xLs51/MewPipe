@@ -1,0 +1,27 @@
+mewpipe:
+    resource: "@AppBundle/Resources/config/routing.yml"
+    prefix: /
+
+user:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix: /
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
+
+rest :
+    type: rest
+    resource: "routing_rest.yml"
+    prefix: /api

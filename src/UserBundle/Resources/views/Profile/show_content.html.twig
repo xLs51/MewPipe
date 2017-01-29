@@ -1,0 +1,47 @@
+<h1>My profile</h1>
+
+<table class="table">
+    <tr>
+        <td>Username</td>
+        <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+        <td>Last name</td>
+        <td>{{ user.lastName }}</td>
+    </tr>
+    <tr>
+        <td>First name</td>
+        <td>{{ user.firstName }}</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>{{ user.email }}</td>
+    </tr>
+    <tr>
+        <td>
+            Birthday
+        </td>
+        <td>
+            {% if user.birthday !=  null %}
+                {{ user.birthday|date('Y-m-d') }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td >Open ID</td>
+        <td>{{ user.openid }}</td>
+    </tr>
+    {% if url is defined %}
+        <tr>
+            <td colspan="2">
+                <a class='login' href='{{ url }}'>Link my account to Google !</a>
+            </td>
+        </tr>
+    {% endif %}
+    <tr>
+        <td colspan="2">
+            <a class="btn btn-default" href="{{ path('fos_user_profile_edit') }}">Edit your profile !</a>
+            <a class="btn btn-default pull-right" href="{{ path('fos_user_change_password') }}">Change your password !</a>
+        </td>
+    </tr>
+</table>

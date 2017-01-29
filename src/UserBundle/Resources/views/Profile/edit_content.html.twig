@@ -1,0 +1,59 @@
+{% spaceless %}
+    {% if not form.vars.valid %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form) }}
+            {% for children in form.children %}
+                {% if not children.vars.valid %}
+                    {{ form_errors(children) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endspaceless %}
+
+<h1>My profile</h1>
+
+<table class="table">
+    <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+        <tr>
+            <td>Username</td>
+            <td>{{ form_widget(form.username, {'attr': {'class' : 'form-control'}}) }}</td>
+        </tr>
+        <tr>
+            <td>Last name</td>
+            <td>{{ form_widget(form.lastName, {'attr': {'class' : 'form-control'}}) }}</td>
+        </tr>
+        <tr>
+            <td>First name</td>
+            <td>{{ form_widget(form.firstName, {'attr': {'class' : 'form-control'}}) }}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ form_widget(form.email, {'attr': {'class' : 'form-control'}}) }}</td>
+        </tr>
+        <tr>
+            <td>Birthday</td>
+            <td>
+                <div class="row">
+                  <div class="col-md-4">{{ form_widget(form.birthday.year, {'attr': {'class' : 'form-control'}}) }}</div>
+                  <div class="col-md-4">{{ form_widget(form.birthday.month, {'attr': {'class' : 'form-control'}}) }}</div>
+                  <div class="col-md-4">{{ form_widget(form.birthday.day, {'attr': {'class' : 'form-control'}}) }}</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>{{ form_widget(form.plainPassword.first, {'attr': {'class' : 'form-control'}}) }}</td>
+        </tr>
+        <tr>
+            <td>Confirm</td>
+            <td>{{ form_widget(form.plainPassword.second, {'attr': {'class' : 'form-control'}}) }}</td>
+        </tr>
+        <tr>
+          <td colspan="2"><button class="btn btn-default" type="submit">Save !</button></td>
+        </tr>
+
+        {{ form_rest(form) }}
+
+    </form>
+</table>
