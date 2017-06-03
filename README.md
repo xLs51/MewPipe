@@ -28,7 +28,7 @@ Installation
 ------------
 
 - Download this project
-- Download the dependencies with composer `php ../composer.phar update` in the MewPipe folder
+- Download the dependencies with composer `composer install` in the MewPipe folder
 - Edit the `parameters.yml` with your configuration
 - Create the database `php app/console doctrine:database:create`
 - Update the schema	`php app/console doctrine:schema:update --force`
